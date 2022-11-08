@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>matching intern</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="main-heading">Queuing calculator</h1>
+        <div class="calc">
+            <div class="inputs">
+                <div class="input">
+                    <label for="arrival" class="input__title">Arrival rate (&lambda;)</label>
+                    <input type="number" name="arrival" id="arrival" placeholder="0" class="input__field" min="0">
+                </div>
+                <div class="input">
+                    <label for="service" class="input__title">Service rate (&mu;)</label>
+                    <input type="number" name="arrival" id="service" placeholder="0" class="input__field" min="0">
+                </div>
+                <div class="horiz">
+                    <div class="input">
+                        <label for="service" class="input__title">Maximum customer (K-1)</label>
+                        <input type="number" name="arrival" id="service" placeholder="0" class="input__field" min="0">
+                    </div>
+                    <div class="input">
+                        <label for="service" class="input__title">Initial Customer (M)</label>
+                        <input type="number" name="arrival" id="service" placeholder="0" class="input__field" min="0">
+                    </div>
+                </div>
+                <button class="btn">Calculate</button>
+            </div>
+            <div class="output"></div>
+        </div>
+    </div>
+</body>
+
+</html>
