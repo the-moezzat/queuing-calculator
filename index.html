@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>matching intern</title>
+    <title>Queuing calculator</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -13,6 +13,13 @@
     <div class="container">
         <h1 class="main-heading">Queuing calculator</h1>
         <div class="calc">
+            <div class="mode">
+                <button class="choice choice--active">D / D / 1 / k-1</button>
+                <button class="choice">M / M / 1</button>
+                <button class="choice">M / M / 1 / K</button>
+                <button class="choice">M / M / C</button>
+                <button class="choice">M / M / C / K</button>
+            </div>
             <div class="inputs">
                 <div class="input">
                     <label for="arrival" class="input__title">Arrival rate (&lambda;)</label>
@@ -24,17 +31,53 @@
                 </div>
                 <div class="horiz">
                     <div class="input">
-                        <label for="service" class="input__title">Maximum customer (K-1)</label>
-                        <input type="number" name="arrival" id="service" placeholder="0" class="input__field" min="0">
+                        <label for="max" class="input__title">Maximum customer (K-1)</label>
+                        <input type="number" name="arrival" id="max" placeholder="0" class="input__field" min="0">
                     </div>
                     <div class="input">
-                        <label for="service" class="input__title">Initial Customer (M)</label>
-                        <input type="number" name="arrival" id="service" placeholder="0" class="input__field" min="0">
+                        <label for="init" class="input__title">Initial Customer (M)</label>
+                        <input type="number" name="arrival" id="init" placeholder="0" class="input__field" min="0">
                     </div>
                 </div>
                 <button class="btn">Calculate</button>
             </div>
-            <div class="output"></div>
+            <div class="output">
+                <div class="customer-number">
+                    <div class="result-header">
+                        <h2 class="secondary-heading">Number of customer n(t)</h2>
+                        <input type="number" name="arrival" id="num-customer" placeholder="n(t)" class="input__field"
+                            min="0">
+                    </div>
+                    <div class="result">
+                        <div class="result__title">t &#x2264; 1/&lambda;</div>
+                        <div class="result__value">0</div>
+                    </div>
+                    <div class="result">
+                        <div class="result__title">1/&lambda; &#x3c; t &#x2264; t<sub>i</sub></div>
+                        <div class="result__value">[&lambda;t] - [&mu;t - &mu;/&lambda;]</div>
+                    </div>
+                    <div class="result">
+                        <div class="result__title">t &gt; t<sub>i</sub></div>
+                        <div class="result__value">k - 1</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="waiting time">
+                    <div class="result-header">
+                        <h2 class="secondary-heading">Waiting time w<sub>q</sub>(t)</h2>
+                        <input type="number" name="arrival" id="waiting-time" placeholder="wq(t)" class="input__field"
+                            min="0">
+                    </div>
+                    <div class="result">
+                        <div class="result__title">n &#x3c; &lambda;t<sub>i</sub></div>
+                        <div class="result__value">[1/&mu; - 1/&lambda;](n - 1)</div>
+                    </div>
+                    <div class="result">
+                        <div class="result__title">n &#x2265; &lambda;t<sub>i</sub></div>
+                        <div class="result__value">[1/&mu; - 1/&lambda;](&lambda;t<sub>i</sub> - 2)</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
