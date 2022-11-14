@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +27,7 @@ body {
   text-transform: uppercase;
   letter-spacing: -1px;
   line-height: 1;
-  margin-bottom: 4.8rem;
+  margin-bottom: 3.2rem;
   text-align: center;
 }
 
@@ -107,6 +109,11 @@ body {
   border-radius: 5px;
   position: relative;
   transition: all 0.2s;
+}
+
+.input__field:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
 }
 
 .input__field::-webkit-outer-spin-button,
@@ -204,14 +211,14 @@ body {
   background-color: hsl(189deg, 41%, 97%);
   cursor: pointer;
   border: 1px solid currentColor;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
-.choice:hover {
+/* .choice:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
   transform: translateY(-2px);
-}
-
+} */
+.choice:hover,
 .choice--active {
   background-color: hsl(183deg, 100%, 15%);
   color: hsl(189deg, 41%, 97%);
