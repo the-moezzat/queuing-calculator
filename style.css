@@ -56,7 +56,7 @@ body {
   /* justify-content: space-between; */
 }
 
-.btn {
+.calc-btn {
   border: none;
   background-color: hsl(183deg, 100%, 15%);
   font-size: 1.8rem;
@@ -72,11 +72,11 @@ body {
   transition: all 0.2s;
 }
 
-.btn:hover {
+.calc-btn:hover {
   background-color: rgba(0, 73, 77, 0.9);
 }
 
-.btn:focus {
+.calc-btn:focus {
   outline: none;
 }
 
@@ -88,7 +88,7 @@ body {
   margin-bottom: 1.6rem;
   width: 100%;
 
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 
 .input__title {
@@ -140,7 +140,7 @@ body {
 .horiz {
   display: flex;
   gap: 1.2rem;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 
 /* output part */
