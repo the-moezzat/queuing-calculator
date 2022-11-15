@@ -99,7 +99,10 @@ calcBtn.addEventListener("click", () => {
   numCustomer.disabled = false;
   waitingTime.disabled = false;
 
-  updateDD1();
+  if (type === "dd1k") updateDD1();
+  if (type === "mm1") updateMM1();
+  if (type === "mm1k") updateMM1k();
+  if (type === "mmc") updateMMC();
 });
 
 numCustomer.addEventListener("keyup", function () {
@@ -175,11 +178,19 @@ function dd1k() {
   maxCustomer.closest(".input").querySelector(".input__title").textContent =
     "Maximum customer (K - 1)";
   InitIn.querySelector(".input__title").textContent = "Initial Customer (M)";
+  arrivalTime.closest(".input").querySelector(".input__title").textContent =
+    "Arrival rate (1/λ)";
+  serviceTime.closest(".input").querySelector(".input__title").textContent =
+    "Service rate (1/μ)";
 }
 
 function mm1() {
   resetInputs();
   maxInit.classList.add("invisible");
+  arrivalTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean arrival rate (λ)";
+  serviceTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean service rate (μ)";
 }
 
 function mm1k() {
@@ -189,6 +200,10 @@ function mm1k() {
   initCustomer.closest(".input").classList.add("invisible");
   maxCustomer.closest(".input").querySelector(".input__title").textContent =
     "Maximum customer (K)";
+  arrivalTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean arrival rate (λ)";
+  serviceTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean service rate (μ)";
 }
 
 function mmc() {
@@ -198,6 +213,10 @@ function mmc() {
   initCustomer.closest(".input").classList.add("invisible");
   maxCustomer.closest(".input").querySelector(".input__title").textContent =
     "systems (C)";
+  arrivalTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean arrival rate (λ)";
+  serviceTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean service rate (μ)";
 }
 
 function mmck() {
@@ -210,6 +229,10 @@ function mmck() {
     "Maximum customer (K)";
   initCustomer.closest(".input").querySelector(".input__title").textContent =
     "systems (C)";
+  arrivalTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean arrival rate (λ)";
+  serviceTime.closest(".input").querySelector(".input__title").textContent =
+    "Mean service rate (μ)";
 }
 
 function calcTi(lambda, mu, K) {
@@ -240,6 +263,13 @@ function calcTiForM(lambda, mu, M) {
     }
   }
   return Math.round(ti + arrivalTime);
+}
+
+function result(title, value) {
+  return `<div class="result">
+              <div class="result__title">${title}</div>
+              <div class="result__value">${value}</div>
+          </div>`;
 }
 
 function updateDD1() {
@@ -283,13 +313,61 @@ function updateDD1() {
       result(`n &#x2265; ${lambda * tiFromM}`, 0);
   }
 
-  outputCustomer.innerHTML = customer;
-  outputWaiting.innerHTML = waiting;
+  output.innerHTML = `<div class="customer-number">
+                    <div class="result-header">
+                        <h2 class="secondary-heading">Number of customer n(t)</h2>
+                        <input type="number" name="arrival" id="num-customer" placeholder="n(t)"
+                            class="input__field input-customer" min="0" disabled>
+                    </div>
+                    <div class="result-customer">${customer}</div>
+                </div>
+                <hr>
+                <div class="waiting time">
+                    <div class="result-header">
+                        <h2 class="secondary-heading">Waiting time w<sub>q</sub>(t)</h2>
+                        <input type="number" name="arrival" id="waiting-time" placeholder="wq(t)"
+                            class="input__field input-waiting" min="0" disabled>
+                    </div>
+                    <div class="result-waiting">${waiting}</div>
+                </div>`;
+  // outputCustomer.innerHTML = customer;
+  // outputWaiting.innerHTML = waiting;
 }
 
-function result(title, value) {
-  return `<div class="result">
-              <div class="result__title">${title}</div>
-              <div class="result__value">${value}</div>
-          </div>`;
+function updateMM1() {
+  const lambda = arrivalTime.value;
+  const mu = serviceTime.value;
+
+  output.innerHTML =
+    result("L", lambda / (mu - lambda)) +
+    result("L<sub>q</sub>", (lambda * lambda) / (mu - lambda)) +
+    result("W", 1 / (mu - lambda)) +
+    result("W<sub>q</sub>", lambda / (mu * (mu - lambda)));
 }
+function updateMM1k() {
+  const lambda = parseInt(arrivalTime.value);
+  const mu = parseInt(serviceTime.value);
+  const k = parseInt(maxCustomer.value);
+  const row = lambda / mu;
+  let l, pk;
+  if (row === 1) {
+    l = k / 2;
+    pk = 1 / (k + 1);
+  } else {
+    const numerator = 1 - (k + 1) * Math.pow(row, k) + k * Math.pow(row, k + 1);
+    const denominator = (1 - row) * (1 - Math.pow(row, k + 1));
+    l = row * (numerator / denominator);
+    pk = Math.pow(row, k) * ((1 - row) / (1 - Math.pow(row, k + 1)));
+  }
+  const lambdaDash = lambda * (1 - pk);
+  const w = l / lambdaDash;
+  const wq = w - 1 / mu;
+  const lq = lambdaDash * wq;
+
+  output.innerHTML =
+    result("L", l.toFixed(3)) +
+    result("L<sub>q</sub>", lq.toFixed(3)) +
+    result("W", w.toFixed(3)) +
+    result("W<sub>q</sub>", wq.toFixed(3));
+}
+function updateMMC() {}
