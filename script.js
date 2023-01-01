@@ -236,20 +236,20 @@ function mmck() {
 }
 
 function calcTi(lambda, mu, K) {
-  let ti = (K - mu / lambda) / (lambda - mu);
-  let roundTi = Math.round(ti);
-  let arrivalTime = 1 / lambda;
+  const numerator = K - mu / lambda;
+  const denumerator = lambda - mu;
+  const arrivalTime = 1 / lambda;
+
+  let curTi = Math.round(numerator / denumerator);
+  let prevTi = 0;
 
   while (true) {
-    roundTi -= arrivalTime;
-    let check =
-      Math.trunc(lambda * roundTi) - Math.trunc(mu * roundTi - mu / lambda);
-    if (check != K) {
-      break;
-    }
+    let p1 = Math.round(lambda * curTi);
+    let p2 = Math.round(mu * curTi - mu / lambda);
+
+    if (p1 - p2 === K) [prevTi, curTi] = [curTi, curTi - arrivalTime];
+    else return curTi;
   }
-  return Math.round(roundTi + arrivalTime);
-}
 
 function calcTiForM(lambda, mu, M) {
   let ti = Math.trunc(M / (mu - lambda));
